@@ -18,4 +18,8 @@
     height: 18vw;
     object-fit: cover;
   }
+
+  .price{
+    color:red;
+  }
   
