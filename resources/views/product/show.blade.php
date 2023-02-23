@@ -12,12 +12,15 @@
         <h5 class="card-title">
           {{ $viewData["product"]["name"] }}
         </h5>
-        <p class="card-text">{{ $viewData["product"]["description"] }}</p>
         @if ($viewData["product"]["price"] > 1000)
           <p class="card-text price">{{ $viewData["product"]["price"] }}</p>
         @else
           <p class="card-text">{{ $viewData["product"]["price"] }}</p>
         @endif
+        @foreach($viewData["product"]->comments as $comment)
+          - {{ $comment->getDescription() }}<br />
+        @endforeach
+
       </div>
     </div>
   </div>
