@@ -16,8 +16,7 @@ class ProductController extends Controller
         $viewData = [];
         $viewData['title'] = 'Products - Online Store';
         $viewData['subtitle'] = 'List of products';
-        $viewData['products'] = Product::all();
-
+        $viewData['products'] = Product::with('comments')->get();
         return view('product.index')->with('viewData', $viewData);
     }
 
@@ -25,12 +24,11 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         #if (isset($product)) {
-            $viewData = [];
-            $viewData['title'] = $product['name'].' - Online Store';
-            $viewData['subtitle'] = $product['name'].' - Product information';
-            $viewData['product'] = $product;
-
-            return view('product.show')->with('viewData', $viewData);
+        $viewData = [];
+        $viewData['title'] = $product['name'].' - Online Store';
+        $viewData['subtitle'] = $product['name'].' - Product information';
+        $viewData['product'] = $product;
+        return view('product.show')->with('viewData', $viewData);
         #} else {
             #return redirect()->route('home.index');
         #}
@@ -38,26 +36,16 @@ class ProductController extends Controller
 
     public function create(): View
     {
-        $viewData = []; //to be sent to the view
+        $viewData = []; 
         $viewData['title'] = 'Create product';
-
         return view('product.create')->with('viewData', $viewData);
     }
 
     public function save(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:10',
-            'price' => 'required|numeric|min:0',
-        ]);
-        /**$viewData = [];
-        $viewData['title'] = 'Exito';
-        $viewData['subtitle'] = 'yeeeeeeeeeiiiiiiii';
-        $viewData['name'] = $_POST['name'];*/
+        Product::validate($request);
         Product::create($request->only(["name","price"]));
         return back();
-        //return view('product.saved')->with('viewData', $viewData);
-        //dd($request->all());
     }
 
     public function saved($name): View
@@ -66,7 +54,6 @@ class ProductController extends Controller
         $viewData['title'] = 'Exito';
         $viewData['subtitle'] = 'yeeii';
         $viewData['name'] = $name;
-
         return view('product.saved')->with('viewData', $viewData);
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Comment;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
 
 
 class Product extends Model
@@ -22,6 +23,15 @@ class Product extends Model
     */
 
     protected $fillable = ['name','price'];
+
+    public static function validate(Request $request):void
+    {
+        $request->validate([
+            'name' => 'required|string|max:10',
+            'price' => 'required|numeric|min:0',
+        ]);
+    }
+
 
     public function getId(): int
     {
