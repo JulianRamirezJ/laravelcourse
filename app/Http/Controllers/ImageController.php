@@ -21,8 +21,6 @@ class ImageController extends Controller
         $storeInterface = app(ImageStorage::class);
         $storeInterface->store($request);
 
-        return back(); 
+        return back();
     }
 }
-
-?>

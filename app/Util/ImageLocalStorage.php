@@ -18,5 +18,3 @@ class ImageLocalStorage implements ImageStorage
         }
     }
 }
-
-?>

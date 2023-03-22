@@ -24,5 +24,3 @@ class ImageNotDIController extends Controller
         return back();
     }
 }
-
-?>
